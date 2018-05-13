@@ -27,8 +27,12 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.os.Environment;
+<<<<<<< HEAD
 import android.os.Handler;
 import android.os.Looper;
+=======
+import android.os.SystemProperties;
+>>>>>>> 2a181bf30... softap: Add support for SAP+SAP from wifi service using HostapdVendor.
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -91,9 +95,19 @@ public class WifiApConfigStore {
     private final FrameworkFacade mFrameworkFacade;
     private boolean mRequiresApBandConversion = false;
 
+<<<<<<< HEAD
     WifiApConfigStore(Context context, Looper looper,
             BackupManagerProxy backupManagerProxy, FrameworkFacade frameworkFacade) {
         this(context, looper, backupManagerProxy, frameworkFacade, DEFAULT_AP_CONFIG_FILE);
+=======
+    // Dual SAP config
+    private String mBridgeInterfaceName = null;
+    private boolean mDualSapStatus = false;
+
+
+    WifiApConfigStore(Context context, BackupManagerProxy backupManagerProxy) {
+        this(context, backupManagerProxy, DEFAULT_AP_CONFIG_FILE);
+>>>>>>> 2a181bf30... softap: Add support for SAP+SAP from wifi service using HostapdVendor.
     }
 
     WifiApConfigStore(Context context,
@@ -133,6 +147,7 @@ public class WifiApConfigStore {
             writeApConfiguration(mApConfigFile, mWifiApConfig);
         }
 
+<<<<<<< HEAD
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_HOTSPOT_CONFIG_USER_TAPPED_CONTENT);
         mContext.registerReceiver(
@@ -155,6 +170,26 @@ public class WifiApConfigStore {
                     }
                 }
             };
+=======
+        mBridgeInterfaceName = SystemProperties
+                .get("persist.vendor.wifi.softap.bridge.interface", "wifi_br0");
+    }
+
+   /* Additional APIs(get/set) to support SAP + SAP Feature */
+
+    public synchronized String getBridgeInterface() {
+        return mBridgeInterfaceName;
+    }
+
+    public synchronized boolean getDualSapStatus() {
+        return mDualSapStatus;
+    }
+
+    public synchronized void setDualSapStatus(boolean enable) {
+        mDualSapStatus = enable;
+    }
+
+>>>>>>> 2a181bf30... softap: Add support for SAP+SAP from wifi service using HostapdVendor.
 
     /**
      * Return the current soft access point configuration.
