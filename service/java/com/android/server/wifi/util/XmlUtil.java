@@ -345,6 +345,7 @@ public class XmlUtil {
         public static final String XML_TAG_IS_LEGACY_PASSPOINT_CONFIG = "IsLegacyPasspointConfig";
         public static final String XML_TAG_ROAMING_CONSORTIUM_OIS = "RoamingConsortiumOIs";
         public static final String XML_TAG_RANDOMIZED_MAC_ADDRESS = "RandomizedMacAddress";
+        public static final String XML_TAG_SHARE_THIS_AP = "ShareThisAp";
 
         /**
          * Write WepKeys to the XML stream.
@@ -386,6 +387,7 @@ public class XmlUtil {
             XmlUtil.writeNextValue(out, XML_TAG_CONFIG_KEY, configuration.configKey());
             XmlUtil.writeNextValue(out, XML_TAG_SSID, configuration.SSID);
             XmlUtil.writeNextValue(out, XML_TAG_BSSID, configuration.BSSID);
+            XmlUtil.writeNextValue(out, XML_TAG_SHARE_THIS_AP, configuration.shareThisAp);
             XmlUtil.writeNextValue(out, XML_TAG_PRE_SHARED_KEY, configuration.preSharedKey);
             writeWepKeysToXml(out, configuration.wepKeys);
             XmlUtil.writeNextValue(out, XML_TAG_WEP_TX_KEY_INDEX, configuration.wepTxKeyIndex);
@@ -524,6 +526,9 @@ public class XmlUtil {
                         break;
                     case XML_TAG_BSSID:
                         configuration.BSSID = (String) value;
+                        break;
+                    case XML_TAG_SHARE_THIS_AP:
+                        configuration.shareThisAp = (boolean) value;
                         break;
                     case XML_TAG_PRE_SHARED_KEY:
                         configuration.preSharedKey = (String) value;
